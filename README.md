@@ -10,9 +10,10 @@ Solution: Deployment and Operation of IoT self-powered, lasting, low cost, small
 Example Use Case: Drone deployed mesh of devices for fire predicting and tracking. Drone fly by daily to get data from network. Drone deploys more devices at any time as desired for coverage/accuracy/additional data metrics.
 
 Tenants:
+
     1. Power once:
         Device is powered once for the mission. Powering initiates need for provisioning. Provisioning performed with minimum touch in wireless mode.
-
+    
     2. Sensors send data to nodes in async and session less mode. Datagram.
 
     3. Command and Control from Node to Sensor is Optional.
@@ -64,7 +65,6 @@ Sensor Admin device is setup using direct automated or manual administration.
 FAQs:
 
     Q1. What is the possible use case?
-
         General use case is to solve the problem of monitoring remote areas with no access to power or connectivity on a low cost. Examples could be any industrial waste monitoring (usually it is remote and hazardous), or waterline monitoring in remote areas where water level may damage ecosystem.
 
     Q2. Why not to use long pooling connections?
