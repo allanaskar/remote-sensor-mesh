@@ -93,7 +93,7 @@ FAQs:
         That will require coordination between sensors and more resources on radio operation on each which will consume more battery.
         
     Q8. Do sensors need to be of the same kind? Ex: Only sensing temperature or other metric?
-        No. Each sensor has data sentence for many metrics to be send. Node operate on sentence level with need to know the schema of the sentence.
+        No. Each sensor has data sentence for many metrics to be send. Node operate on sentence level with no need to know the schema of the sentence.
         
     Q9. What happens if sensor or node fails?
         This solution is designed for all possible failures. Dropping devices from sky may damage them. Sensor or node can stop functioning at any time and will stop functioning when battery depletes. All communication rules are structured around that principles.
@@ -108,7 +108,7 @@ FAQs:
         It depends on many parameters. In most cases we can assume 10-20 nodes and 200-400 sensors. This will cost $1150-$2300.
         
     Q13.Can devices be reused?
-        Yes. After device is retrieved from the field and can easily be repurposed. In most of the cases it just need new battery and a new mission.
+        Yes. After device is retrieved from the field, it can easily be repurposed. In most of the cases it just needs a new battery and a new mission.
         
     Q14.What is 'Sensor Admin Device'?
         It could be any connected device with ability to run Wireless Access Point and host web server with sensor and mission configuration data. Ex: Mobile phone.
