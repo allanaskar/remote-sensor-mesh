@@ -1,0 +1,3 @@
+Based on https://en.wikipedia.org/wiki/NodeMCU
+pin out: 
+drivers: https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers
