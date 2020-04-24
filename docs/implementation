@@ -14,3 +14,7 @@ Node spec:
 Demo will have 2 sensors gathering sensor data with one measurement per 10 seconds rate.
 Node will be introduced in intermittent fashion and collect data from sensors.
 For demo purposes the Deep Sleep on sensors may be omitted.
+
+Node will have AP SSID in following format: 'IoT-RSM-dXXX' where 'd' designates 'Dev' or 'Demo' and 'XXX' any base 62 ASCII characters for sequential numbering.
+Ex: 'IoT-RSM-d000'
+Note. The sensor code will look for 'IoT-RSM-d*' wildcard.
