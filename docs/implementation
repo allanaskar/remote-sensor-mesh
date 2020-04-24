@@ -2,13 +2,15 @@ This document outlines goals and plans related to implementation of simple, remo
 
 Version 1 started on March 27th, 2020
 
+![Image of Components](https://qcv24a.dm.files.1drv.com/y4mPIG95jlC-vYqO5r8cYfA8ZUeiYUhNpKgJQBCTdLw_2YR5jrWo7lYpoW_QuGNmKSZeEeFzHtFqHjWUr06KJXqZV9bR7Sas7_ZZNS-g49ddl2CfU6-EC0jtNCJLmVyZrLM-jGTbjaW39ppGcqrgi7LOeT9WkkTBcISR9gIpXxNT8g2vP45f0420-uC0AB2JSXSfTpbHsGuPVZqWvoIiw-Rtg?width=971&height=591&cropmode=none)
+
 Sensor spec:
     ESP32 with WiFi radio onboard and Li-ion 3.7V battery. 
     Demo unit is built using: ESP32-DevKitC-32D ( https://www.mouser.com/ProductDetail/Espressif-Systems/ESP32-DevKitC-32D )
 
     Temp and Humidity option: https://randomnerdtutorials.com/esp32-dht11-dht22-temperature-humidity-web-server-arduino-ide/
 
-Node spec:
+Node (on the drone) spec:
     Raspberry Pi board with WiFi operating in AP mode. The node could be on the drone to be in the mesh area once per data-gathering period.
 
 Demo will have 2 sensors gathering sensor data with one measurement per 10 seconds rate.
