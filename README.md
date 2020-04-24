@@ -9,6 +9,8 @@ Solution: Deployment and Operation of IoT self-powered, lasting, low cost, small
 
 Example Use Case: Drone deployed mesh of devices for fire predicting and tracking. Drone fly by daily to get data from network. Drone deploys more devices at any time as desired for coverage/accuracy/additional data metrics.
 
+![Image of Components](https://qcv24a.dm.files.1drv.com/y4mPIG95jlC-vYqO5r8cYfA8ZUeiYUhNpKgJQBCTdLw_2YR5jrWo7lYpoW_QuGNmKSZeEeFzHtFqHjWUr06KJXqZV9bR7Sas7_ZZNS-g49ddl2CfU6-EC0jtNCJLmVyZrLM-jGTbjaW39ppGcqrgi7LOeT9WkkTBcISR9gIpXxNT8g2vP45f0420-uC0AB2JSXSfTpbHsGuPVZqWvoIiw-Rtg?width=971&height=591&cropmode=none)
+
 Tenants:
 
     1. Power once:
