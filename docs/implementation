@@ -1,8 +1,7 @@
 This document outlines goals and plans related to implementation of simple, remote  distributed IoT mesh of devices in hazardous area.
 
 Version 1 started on March 27th, 2020
-
-![Image of Components](https://qcv24a.dm.files.1drv.com/y4mPIG95jlC-vYqO5r8cYfA8ZUeiYUhNpKgJQBCTdLw_2YR5jrWo7lYpoW_QuGNmKSZeEeFzHtFqHjWUr06KJXqZV9bR7Sas7_ZZNS-g49ddl2CfU6-EC0jtNCJLmVyZrLM-jGTbjaW39ppGcqrgi7LOeT9WkkTBcISR9gIpXxNT8g2vP45f0420-uC0AB2JSXSfTpbHsGuPVZqWvoIiw-Rtg?width=971&height=591&cropmode=none)
+Published: https://github.com/allanaskar/remote-sensor-mesh
 
 Sensor spec:
     ESP32 with WiFi radio onboard and Li-ion 3.7V battery. 
@@ -19,4 +18,4 @@ For demo purposes the Deep Sleep on sensors may be omitted.
 
 Node will have AP SSID in following format: 'IoT-RSM-dXXX' where 'd' designates 'Dev' or 'Demo' and 'XXX' any base 62 ASCII characters for sequential numbering.
 Ex: 'IoT-RSM-d000'
-Note. The sensor code will look for 'IoT-RSM-d*' wildcard.
+Note. The sensor code will look for 'IoT-RSM-d*' wildcard. The secret is 'pa$$-dXXX'.
