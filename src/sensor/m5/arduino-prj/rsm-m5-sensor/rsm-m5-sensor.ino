@@ -10,6 +10,9 @@
  *    After WiFi is a Go it brodcasts on port 2424 via Multicast 233.233.233.233
  *      
  *      Version: v0.1 20424 Initial version
+ *      Version: v1.0 20508 WiFi is a go and Battary reading is being send via UDP.
+ *      
+ *      TODO: LCD display improvement
  *               
  *  Main Loop: 
  * 1. Init 'Blank' state if never executed. Ran once.
@@ -40,7 +43,7 @@ struct State {
   int   RunHours;       // Number of hours running since last reboot/reset
   
   // Inputs
-  int   BatVoltage;       // Voltage of the battery
+  double BatVoltage;       // Voltage of the battery
 };
 
 State st = { 
@@ -51,17 +54,23 @@ State st = {
   false,//bool/DisplayOn,     // Flag to be true if display is on (false for low power mode)
   0,//int/RunHours,           // Number of hours running since last reboot/reset
   // Inputs
-  0//int/BatVoltage,          // Voltage of the battery 
+  0.0//int/BatVoltage,          // Voltage of the battery 
 };
 
 char ssid[48]; 
 char password[48];
 
 char* ssidSample = "IoT-RSM-d";     // Ex: IoT-RSM-demo
-char* passcodeTemplate = "pa$$-dXXX"; // Ex: pa$$-d007
+char* passcodeTemplate = "pa$$-"; // Ex: pa$$-SSID
+const byte matchCharSize = 9;
 
-const char* PN = "RSM-dSens-1.0"; // v1.0.
-const char* DT = "20424";
+// Private testing
+//char* ssidSample = "private";    
+//const byte matchCharSize = 6;
+//char* passcodeTemplate = ""; 
+
+const char* PN = "RSM-dSens-1.0"; // v1.0
+const char* DT = "20508";
 
 IPAddress ip;
 
@@ -119,6 +128,11 @@ bool setupWiFi() {
 
 void setup() {
     M5.begin();
+    M5.Lcd.setRotation(3);
+    M5.Lcd.fillScreen(WHITE);
+    M5.Lcd.setTextColor(BLACK, WHITE);
+    M5.Lcd.setTextSize(2);
+        
     //setupLed();
 
 #if defined DEBUG && DEBUG==1
@@ -176,13 +190,17 @@ void loop() { // Will be called for unlimited amount of time
   unsigned long startClock = millis();
   unsigned long endClock = startClock+(wifiReconnect*1000);
   bool keepRunning = true;
+
+  unsigned long endClockInItteration;
     
   while(millis()<endClock && st.WiFiConnected) {
+
+    endClockInItteration = millis() + 500; // 0.5s
 
 #if defined M5_BOARD && M5_BOARD==1    
     st.BatVoltage = M5.Axp.GetBatVoltage();
 #if defined DEBUG && DEBUG==1
-    sprintf(msg, "%s|%03u:%04u ", SN, st.IP3, st.BatVoltage);
+    sprintf(msg, "%s|%03u:%0.2f ", SN, st.IP3, st.BatVoltage);
     Serial.println(msg); 
 #endif        
 #endif    
@@ -194,9 +212,13 @@ void loop() { // Will be called for unlimited amount of time
    
 #if defined HAS_DISPLAY && HAS_DISPLAY==1
     // Prep for Display and display
-    sprintf(msg, "%04u", st.BatVoltage);
+    M5.Lcd.printf(msg, "%0.2f", st.BatVoltage);
     //u8x8.drawString(0, 4, msg);    
 #endif    
+
+    // Main loop delay while connection is on
+    while(millis()<endClockInItteration) {} // Kill some time. Later use a Deep Sleep
+    
     //delay(1000);           // 1 s 
     //loopLed(false);   
   }
@@ -249,25 +271,31 @@ static void scanNet() //
               Serial.print(i + 1); Serial.print(": ");
               Serial.print(WiFi.SSID(i)); Serial.print(" (");
               Serial.print(WiFi.RSSI(i)); Serial.print(")");
-              Serial.println((WiFi.encryptionType(i) == 0)?" ":"*"); // WIFI_AUTH_OPEN=0
+              Serial.println((WiFi.encryptionType(i) == 0)?" ":" *"); // WIFI_AUTH_OPEN=0
 
               // Print SSID for each network found
               char currentSSID[16]; // Up to 16 chars on the line
+              char ssidPrefix[matchCharSize+1];
               WiFi.SSID(i).toCharArray(currentSSID, 16);
               //u8x8.drawString(0, row++, currentSSID);
 
               // Check if we found a match (''IoT-RSM-d*'
-              char temp[10];
-              WiFi.SSID(i).toCharArray(temp, 10);
+              char temp[matchCharSize+1];
+              WiFi.SSID(i).toCharArray(temp, matchCharSize+1);
+              WiFi.SSID(i).toCharArray(ssidPrefix, matchCharSize+1);
               //u8x8.drawString(10, row++, temp);
 
-              if(strcmp(temp, ssid) ==0){
+              if(strcmp(temp, ssidPrefix)==0){
                 matchIsFound = true; strcpy(password,passcodeTemplate);
                 strcat( password, currentSSID );
                 Serial.println(password);
               }
+
+              Serial.print(" Match is ");
+              Serial.println((matchIsFound)?"found ":"missing "); // WIFI_AUTH_OPEN=0
               
               if(matchIsFound){
+                Serial.println("Try to connect...");
                 // Stop the loop
                 i=n;
                 // Match
