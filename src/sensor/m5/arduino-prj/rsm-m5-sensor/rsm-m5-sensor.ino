@@ -24,6 +24,7 @@
 #define M5_BOARD 1
 
 #include <M5StickC.h>
+#include <WiFi.h>
 
 #define DEBUG 1
 
@@ -56,8 +57,8 @@ State st = {
 char ssid[48]; 
 char password[48];
 
-char* ssid = "IoT-RSM-d";     // Ex: IoT-RSM-demo
-char* passcode = "pa$$-dXXX"; // Ex: pa$$-d007
+char* ssidSample = "IoT-RSM-d";     // Ex: IoT-RSM-demo
+char* passcodeTemplate = "pa$$-dXXX"; // Ex: pa$$-d007
 
 const char* PN = "RSM-dSens-1.0"; // v1.0.
 const char* DT = "20424";
@@ -68,25 +69,29 @@ IPAddress ip;
 // 20424 1 & 2 -> M5,WiFi,OLED
 
 const int snNum = 0; 
-char * SN = "de"; // demo SN
+char* SN = "de"; // demo SN
 const char * ReconnectMsg = " de|WiFiRestart ";
 
 // Hardware specifics
 #if defined M5_BOARD && M5_BOARD==1
-  const char * Module = "M5 v1";
+  const char* Module = "M5 v1";
 #else  
-  const char * Module = "Unknown";
+  const char* Module = "Unknown";
 #endif
 
-char msg[100];
-char displayMsg[100];
-char ccResponds[100];
-const char * ccOkResponds = "ok";
+const uint8_t strSize = 100;
+char msg[strSize];
+char displayMsg[strSize];
+char ccResponds[strSize];
+const char* ccOkResponds = "ok";
 
 // COM vars
-unsigned long wifiReconnectInDemo = 30; // 30s
+ulong wifiReconnectInDemo = 30; // 30s
 unsigned long wifiReconnectNormalPower = 300; // 5m
 unsigned long wifiReconnectLowPower = 3600; // 1h
+unsigned long wifiReconnect = wifiReconnectInDemo;  // Default
+
+long matchCount;
 
 bool setupWiFi() {
     WiFi.mode(WIFI_STA);
@@ -114,7 +119,7 @@ bool setupWiFi() {
 
 void setup() {
     M5.begin();
-    setupLed();
+    //setupLed();
 
 #if defined DEBUG && DEBUG==1
     Serial.begin(115200); // Speed rate
@@ -163,7 +168,7 @@ void loop() { // Will be called for unlimited amount of time
   while(tempTimeShift>10) tempTimeShift=tempTimeShift-10;
   delay(3000+tempTimeShift*200);           // 3s plus SN
 
-  st.CycleCount++;
+  //st.CycleCount++;
   //cycle++;
   
   scanNet();
@@ -207,7 +212,6 @@ static void topDisplay() {
 #endif   
 }
 
-//static void scanNet(int cycle, int matchCount)
 static void scanNet() //
 {
   bool matchIsFound = false;
@@ -258,7 +262,7 @@ static void scanNet() //
               //u8x8.drawString(10, row++, temp);
 
               if(strcmp(temp, ssid) ==0){
-                matchIsFound = true; strcpy(password,passcode);
+                matchIsFound = true; strcpy(password,passcodeTemplate);
                 strcat( password, currentSSID );
                 Serial.println(password);
               }
@@ -285,10 +289,8 @@ static void scanNet() //
             }
         }
 #if defined HAS_DISPLAY && HAS_DISPLAY==1
-        M5.Lcd.print.setCursor(2,7);
-        M5.Lcd.print.print(matchCount);    // Display Match Counter
-        M5.Lcd.print.print(" of ");    //        
-        M5.Lcd.print.print(st.CycleCount);    // Display Loop Counter
+        M5.Lcd.setCursor(2,7);
+        M5.Lcd.print(matchCount);    // Display Match Counter
 #endif        
     }
 #if defined DEBUG && DEBUG==1 

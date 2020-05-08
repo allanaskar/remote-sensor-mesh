@@ -13,6 +13,8 @@
   WiFiUDP udpC;
 
 unsigned int localPort = 2424;      // local port to send udp packets
+int const UDP_TX_PACKET_MAX_SIZE = 1500;
+
 IPAddress hubIPAddress(233,233,233,233);  // Multicast address on hub
 
 // buffers for receiving and sending data
@@ -24,6 +26,6 @@ void setupUdpClient(){  // Start the client
 
 void sendData(char* msg) { // Send udp data to multicast address
     udpC.beginPacket(hubIPAddress, localPort);
-    udpC.write(msg);  
+    udpC.printf(msg); 
     udpC.endPacket(); 
 }
