@@ -1,0 +1,2 @@
+This document will outlined steps involved to get the Demo App on FreeRTOS deployed to ESP32 compatible board. It is based on https://docs.aws.amazon.com/freertos/latest/userguide/freertos-getting-started.html 
+

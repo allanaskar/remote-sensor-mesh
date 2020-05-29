@@ -1,0 +1,7 @@
+This document will outline steps involved to get the Node setup with following functions:
+- AP based on https://thepi.io/how-to-use-your-raspberry-pi-as-a-wireless-access-point/ 
+
+- GGC with Demo App on Green Grass Core deployed to Raspberry Pi compatible board. It is based on ...
+
+Step1: Follow https://thepi.io/how-to-use-your-raspberry-pi-as-a-wireless-access-point/ and make sure you have the node setup as WiFi AP with Ethernet port used for Gateway. This will allow to use it in the field and have Sensors communicate to it.
+
