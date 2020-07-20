@@ -3,5 +3,16 @@ This document will outline steps involved to get the Node setup with following f
 
 - GGC with Demo App on Green Grass Core deployed to Raspberry Pi compatible board. It is based on ...
 
+Step 0: Get image from https://www.raspberrypi.org/downloads/raspberry-pi-os/ 
+    0.1 Burn the flash and plug it in the Raspberry box
+    0.2 Power it on and run the initial wizard
+    0.3 Set the built-in WiFi to connect to the internet
+    0.4 
+
+
 Step1: Follow https://thepi.io/how-to-use-your-raspberry-pi-as-a-wireless-access-point/ and make sure you have the node setup as WiFi AP with Ethernet port used for Gateway. This will allow to use it in the field and have Sensors communicate to it.
+ - ssid: uP....4 / secret (Use your own)
+ 
+
+
 
